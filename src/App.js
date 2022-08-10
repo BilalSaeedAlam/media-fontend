@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+// bootstrap components
+import { Button } from "react-bootstrap";
+// Components
+import { SubscribeModal } from "./components";
+import { useAppContext } from "./contexts/appContext";
 
 function App() {
+  const { state } = useAppContext();
+  const [subscriberModal, setSubscriberModal] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <div className="main">
+        <Button
+          className="button"
+          size="lg"
+          onClick={() => setSubscriberModal(true)}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          JOIN THE WAITLIST
+        </Button>
+      </div>
+      <SubscribeModal show={subscriberModal} setShow={setSubscriberModal} />
+    </>
   );
 }
 
