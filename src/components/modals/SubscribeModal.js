@@ -23,7 +23,7 @@ export default function SubscribeModal({ show, setShow }) {
     { action: "S", name: "S" },
   ];
   return (
-    <CustomModal show={show} setShow={setShow} title="">
+    <CustomModal show={show} setShow={setShow} title="" size="md">
       <div className="subscribe-modal">
         <h4>JOIN THE WAITLIST</h4>
         <p>
