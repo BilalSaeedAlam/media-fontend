@@ -134,3 +134,10 @@ select {
   background-color: #404040 !important;
   border-color: #404040 !important;
 }
+
+@media (min-width: 768px) {
+  .subheading-p {
+    padding-right: 4rem !important;
+    padding-left: 4rem !important;
+  }
+}

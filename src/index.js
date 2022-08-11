@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // css imports
-import "./styles/global.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/global.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AppWrapper } from "./contexts/appContext";

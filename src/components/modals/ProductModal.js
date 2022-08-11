@@ -28,7 +28,7 @@ export default function ProductModal({ show, setShow }) {
     <CustomModal show={show} setShow={setShow} title="" size="lg">
       <div className="product-modal">
         <h4>YOU ARE ON THE LIST!</h4>
-        <p className="px-md-5 py-md-3 px-1">
+        <p className="subheading-p py-md-3 px-1">
           We added you to the list! We will reach out if this item becomes
           available again. We've also collected top picksjust for you:
         </p>
