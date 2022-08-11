@@ -1,7 +1,12 @@
-import React from "react";
-import { CustomModal } from "../../shared";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+// Components
+import { CustomModal } from "../../shared";
+import { useAppContext } from "../../contexts/appContext";
+// Api's
+import { addSubscriber } from "../../apis";
 
 const SubscribeSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -9,6 +14,8 @@ const SubscribeSchema = Yup.object().shape({
 });
 
 export default function SubscribeModal({ show, setShow }) {
+  const { dispatch } = useAppContext();
+  const [loading, setLoading] = useState(false);
   const data = [
     { action: "", name: "Select Size" },
     { action: "L", name: "L" },
@@ -26,14 +33,27 @@ export default function SubscribeModal({ show, setShow }) {
 
         <Formik
           initialValues={{
-            email: "",
             size: "",
-            check: false,
+            email: "",
+            isSubscribe: false,
           }}
           validationSchema={SubscribeSchema}
-          onSubmit={(values) => {
-            // same shape as initial values
-            console.log(values);
+          onSubmit={async (values) => {
+            const payload = {
+              email: values.email,
+              size: values.size,
+              isSubscribe: values.isSubscribe,
+            };
+            setLoading(true);
+            const result = await addSubscriber(payload);
+            if (result?.data?.data && result?.data?.is_success) {
+              dispatch({ type: "USER_DATA", value: result?.data?.data });
+              setLoading(false);
+              setShow(false);
+            } else {
+              toast.error(result?.data?.message, { autoClose: 1000 });
+              setLoading(false);
+            }
           }}
         >
           {({
@@ -49,16 +69,13 @@ export default function SubscribeModal({ show, setShow }) {
             setFieldValue,
           }) => (
             <Form>
-              {/* <DropDown buttonText="Select Size" items={data}></DropDown> */}
-
+              {/* Item Size */}
               <p className="sub-heading padding-top">Size</p>
-
               <select
                 name="size"
                 value={values.size}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                // style={{ display: "block" }}
               >
                 {data &&
                   data.length > 0 &&
@@ -73,6 +90,7 @@ export default function SubscribeModal({ show, setShow }) {
               {errors.size && touched.size ? (
                 <div className="error-text-color">{errors.size}</div>
               ) : null}
+              {/* Subscriber Email */}
               <p className="sub-heading padding-top">Email</p>
               <div>
                 <Field name="email" type="email" className="email" />
@@ -80,13 +98,21 @@ export default function SubscribeModal({ show, setShow }) {
                   <div className="error-text-color">{errors.email}</div>
                 ) : null}
               </div>
+              {/* Subscribe Button */}
               <div className="btn-wrapper">
                 <button
                   type="submit"
-                  //disabled={isSubmitting}
+                  disabled={isSubmitting}
                   className="btn-submit"
                 >
-                  GET NOTIFIED
+                  {!loading ? (
+                    "GET NOTIFIED"
+                  ) : (
+                    <div
+                      className="spinner-grow text-light"
+                      role="status"
+                    ></div>
+                  )}
                 </button>
               </div>
               <div className="form-check">
@@ -94,8 +120,10 @@ export default function SubscribeModal({ show, setShow }) {
                   className="form-check-input"
                   type="checkbox"
                   name="isCheck"
-                  value={values.check}
-                  onChange={() => setFieldValue("check", !values.check)}
+                  value={values.isSubscribe}
+                  onChange={() =>
+                    setFieldValue("isSubscribe", !values.isSubscribe)
+                  }
                 />
                 <label className="form-check-label">
                   Subscribe to our newsletter

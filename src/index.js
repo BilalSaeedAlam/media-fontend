@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // css imports
 import "./styles/global.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,6 +15,7 @@ root.render(
     <AppWrapper>
       <App />
     </AppWrapper>
+    <ToastContainer closeButton={true} limit={1} position="top-right" />
   </React.StrictMode>
 );
 

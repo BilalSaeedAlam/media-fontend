@@ -71,11 +71,13 @@ select {
 }
 .btn-submit {
   background-color: #404040 !important;
+  border: none !important;
   color: white;
   width: 100%;
   border-radius: 5px;
   height: 50px;
 }
+
 .form-check {
   padding-top: 10px !important;
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 // bootstrap components
 import { Button } from "react-bootstrap";
 // Components
@@ -8,7 +9,7 @@ import { useAppContext } from "./contexts/appContext";
 function App() {
   const { state } = useAppContext();
   const [subscriberModal, setSubscriberModal] = useState(false);
-
+  console.log("User Data", state?.userData);
   return (
     <>
       <div className="main">
